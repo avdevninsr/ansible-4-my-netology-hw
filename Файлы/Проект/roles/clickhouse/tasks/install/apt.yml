@@ -1,0 +1,47 @@
+---
+#Main installation actions
+#https://clickhouse.com/docs/en/getting-started/#installation
+
+- name: Preparing
+  command: "sudo apt-get install -y apt-transport-https ca-certificates curl gnupg"
+  register: stdio_output
+
+- name: Download clickhouse-common-static
+  ansible.builtin.get_url:
+    url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
+    dest: "/tmp/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
+    
+- name: Download clickhouse-client
+  ansible.builtin.get_url:
+    url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-client_{{ clickhouse_version }}_amd64.deb"
+    dest: "/tmp/clickhouse-client_{{ clickhouse_version }}_amd64.deb"
+    
+- name: Download clickhouse-server
+  ansible.builtin.get_url:
+    url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-server_{{ clickhouse_version }}_amd64.deb"
+    dest: "/tmp/clickhouse-server_{{ clickhouse_version }}_amd64.deb"
+
+#- name: Download clickhouse-keeper
+  #ansible.builtin.get_url:
+    #url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-keeper_{{ clickhouse_version }}_amd64.deb"
+    #dest: "/tmp/clickhouse-keeper_{{ clickhouse_version }}_amd64.deb"
+    
+- name: Install clickhouse-common-static
+  become: true
+  ansible.builtin.apt:
+    deb: /tmp/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb
+    
+- name: Install clickhouse-client
+  become: true
+  ansible.builtin.apt:
+    deb: /tmp/clickhouse-client_{{ clickhouse_version }}_amd64.deb
+    
+- name: Install clickhouse-server
+  become: true
+  ansible.builtin.apt:
+    deb: /tmp/clickhouse-server_{{ clickhouse_version }}_amd64.deb
+    
+#- name: Install clickhouse-keeper
+  #become: true
+  #ansible.builtin.apt:
+    #deb: /tmp/clickhouse-keeper_{{ clickhouse_version }}_amd64.deb

@@ -1,0 +1,19 @@
+---
+clickhouse:
+  hosts:
+    debian:
+      ansible_host: 192.168.0.121
+      ansible_user: tankist
+      ansible_ssh_private_key_file: /home/tankist2/.ssh/id_rsa
+vector:
+  hosts:
+    debian:
+      ansible_host: 192.168.0.121
+      ansible_user: tankist
+      ansible_ssh_private_key_file: /home/tankist2/.ssh/id_rsa
+lighthouse:
+  hosts:
+    debian:
+      ansible_host: 192.168.0.121
+      ansible_user: tankist
+      ansible_ssh_private_key_file: /home/tankist2/.ssh/id_rsa

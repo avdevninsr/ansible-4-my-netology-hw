@@ -1,0 +1,34 @@
+---
+- name: Set hostnames for all servers
+  vars_files:
+    - /home/tankist2/ansible_4_1/group_vars/clickhouse/vars.yml
+    - /home/tankist2/ansible_4_1/group_vars/vector/vars.yml
+    - /home/tankist2/ansible_4_1/group_vars/lighthouse/vars.yml
+  hosts: all
+  become: true
+  tasks:
+    - name: Set hostname based on inventory
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+      when: ansible_hostname != inventory_hostname
+
+
+- name: Install Clickhouse
+  hosts: debian
+  become: true
+  roles:
+    - clickhouse
+
+
+- name: Install Lighthouse
+  hosts: debian
+  become: true
+  roles:
+    - lighthouse
+
+
+- name: Install Vector
+  hosts: debian
+  become: true
+  roles:
+    - vector

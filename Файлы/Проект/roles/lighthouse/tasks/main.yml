@@ -1,0 +1,45 @@
+---
+- name: Install nginx
+  become: true
+  apt:
+    name: nginx
+    state: present
+
+- name: Install git
+  become: true
+  ansible.builtin.apt:
+    name: git
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Create web root directory
+  ansible.builtin.file:
+    path: "{{ web_root }}"
+    state: directory
+    mode: '0777'
+    
+- name: Clone lighthouse repository
+  ansible.builtin.git:
+    repo: "{{ lighthouse_repo }}"
+    dest: "{{ web_root }}"
+    force: yes
+
+- name: Remove default nginx config
+  command: "sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default2"
+  register: stdout
+
+- name: Create nginx config
+  become: true
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_config_path }}"
+    mode: '0777'
+  notify: Restart nginx
+
+- name: Start and enable nginx
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+

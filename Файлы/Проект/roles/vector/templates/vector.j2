@@ -1,0 +1,26 @@
+# Источник: читаем логи Nginx из файла
+[sources.nginx_logs]
+type = "file"
+include = ["/var/log/nginx/access.log", "/var/log/nginx/error.log"]
+read_from = "beginning"  # читать с начала файла
+
+# Преобразование: парсим логи Nginx
+[transforms.parse_nginx]
+type = "remap"
+inputs = ["nginx_logs"]
+source = '''
+# Используем встроенный парсер Nginx для формата combined
+structured = parse_nginx_log!(.message, format: "combined")
+
+# Опционально: обогатим данные (добавим поле с IP сервера)
+# Например: server = ".server.com"
+'''
+
+# Приёмник: отправляем данные во внешнюю систему
+[sinks.clickhouse]
+type = "clickhouse"
+inputs = ["parse_nginx"]
+endpoint = "http://127.0.0.1:8123"
+database = "nginx_db"
+table = "access_logs"
+skip_unknown_fields = true  # пропускаем поля, которых нет в нашей схеме

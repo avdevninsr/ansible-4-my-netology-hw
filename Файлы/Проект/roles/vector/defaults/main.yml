@@ -1,0 +1,6 @@
+---
+vector_version: "0.56.0"
+vector_deb_url: "https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb"
+vector_deb_path: "/tmp/vector-{{ vector_version }}.deb"
+vector_config_path: "/etc/vector/vector.toml"
+#vector_config_path: "/etc/vector/examples/stdio.yaml

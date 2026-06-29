@@ -1,0 +1,10 @@
+---
+lighthouse_version: "master"
+lighthouse_repo: "https://github.com/avdevninsr/lighthouse.git"
+web_root: "/usr/share/nginx/html"
+nginx_config_path: "/etc/nginx/sites-available/default"
+
+#nginx_rpm_url: "http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.24.0-1.el7.ngx.x86_64.rpm"
+#nginx_rpm_path: "/tmp/nginx.rpm"
+#nginx_deb_url: "https://nginx.org/packages/debian/pool/nginx/n/nginx/nginx_1.30.3-1~trixie_amd64.deb"
+#nginx_deb_path: "/tmp/nginx.deb"

@@ -1,0 +1,5 @@
+---
+lighthouse_repo: "https://github.com/avdevninsr/lighthouse.git"
+lighthouse_dir: "/opt/lighthouse"
+web_root: "/usr/share/nginx/html/lighthouse"
+nginx_config_path: "/etc/nginx/sites-available/default"
